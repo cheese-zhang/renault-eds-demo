@@ -26,14 +26,20 @@ function sampleRUM(checkpoint, data = {}) {
     || new URL(window.RUM_BASE == null ? 'https://rum.hlx.page' : window.RUM_BASE, window.location);
   sampleRUM.defer = sampleRUM.defer || [];
   const defer = (fnname) => {
-    sampleRUM[fnname] = sampleRUM[fnname] || ((...args) => sampleRUM.defer.push({ fnname, args }));
+    sampleRUM[fnname] = sampleRUM[fnname] || ((...args) => sampleRUM.defer.push({
+      fnname,
+      args
+    }));
   };
   sampleRUM.drain = sampleRUM.drain
     || ((dfnname, fn) => {
       sampleRUM[dfnname] = fn;
       sampleRUM.defer
         .filter(({ fnname }) => dfnname === fnname)
-        .forEach(({ fnname, args }) => sampleRUM[fnname](...args));
+        .forEach(({
+          fnname,
+          args
+        }) => sampleRUM[fnname](...args));
     });
   sampleRUM.always = sampleRUM.always || [];
   sampleRUM.always.on = (chkpnt, fn) => {
@@ -49,7 +55,9 @@ function sampleRUM(checkpoint, data = {}) {
     if (!window.hlx.rum) {
       const usp = new URLSearchParams(window.location.search);
       const weight = usp.get('rum') === 'on' ? 1 : 100; // with parameter, weight is 1. Defaults to 100.
-      const id = Math.random().toString(36).slice(-4);
+      const id = Math.random()
+        .toString(36)
+        .slice(-4);
       const random = Math.random();
       const isSelected = random * weight < 1;
       const firstReadTime = window.performance ? window.performance.timeOrigin : Date.now();
@@ -70,7 +78,11 @@ function sampleRUM(checkpoint, data = {}) {
       };
     }
 
-    const { weight, id, firstReadTime } = window.hlx.rum;
+    const {
+      weight,
+      id,
+      firstReadTime
+    } = window.hlx.rum;
     if (window.hlx && window.hlx.rum && window.hlx.rum.isSelected) {
       const knownProperties = [
         'weight',
@@ -95,7 +107,11 @@ function sampleRUM(checkpoint, data = {}) {
         // eslint-disable-next-line object-curly-newline, max-len, no-use-before-define
         const body = JSON.stringify(
           {
-            weight, id, referer: window.hlx.rum.sanitizeURL(), checkpoint, t, ...data,
+            weight,
+            id,
+            referer: window.hlx.rum.sanitizeURL(),
+            checkpoint,
+            t, ...data,
           },
           knownProperties,
         );
@@ -161,7 +177,10 @@ function init() {
   window.addEventListener('load', () => sampleRUM('load'));
 
   ['error', 'unhandledrejection'].forEach((event) => {
-    window.addEventListener(event, ({ reason, error }) => {
+    window.addEventListener(event, ({
+      reason,
+      error
+    }) => {
       const errData = { source: 'undefined error' };
       try {
         errData.target = (reason || error).toString();
@@ -200,7 +219,8 @@ function toClassName(name) {
  * @returns {string} The camelCased name
  */
 function toCamelCase(name) {
-  return toClassName(name).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+  return toClassName(name)
+    .replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 }
 
 /**
@@ -211,39 +231,42 @@ function toCamelCase(name) {
 // eslint-disable-next-line import/prefer-default-export
 function readBlockConfig(block) {
   const config = {};
-  block.querySelectorAll(':scope > div').forEach((row) => {
-    if (row.children) {
-      const cols = [...row.children];
-      if (cols[1]) {
-        const col = cols[1];
-        const name = toClassName(cols[0].textContent);
-        let value = '';
-        if (col.querySelector('a')) {
-          const as = [...col.querySelectorAll('a')];
-          if (as.length === 1) {
-            value = as[0].href;
+  block.querySelectorAll(':scope > div')
+    .forEach((row) => {
+      if (row.children) {
+        const cols = [...row.children];
+        if (cols[1]) {
+          const col = cols[1];
+          const name = toClassName(cols[0].textContent);
+          let value = '';
+          if (col.querySelector('a')) {
+            const as = [...col.querySelectorAll('a')];
+            if (as.length === 1) {
+              value = as[0].href;
+            } else {
+              value = as.map((a) => a.href);
+            }
+          } else if (col.querySelector('img')) {
+            const imgs = [...col.querySelectorAll('img')];
+            if (imgs.length === 1) {
+              value = imgs[0].src;
+            } else {
+              value = imgs.map((img) => img.src);
+            }
+          } else if (col.querySelector('p')) {
+            const ps = [...col.querySelectorAll('p')];
+            if (ps.length === 1) {
+              value = ps[0].textContent;
+            } else {
+              value = ps.map((p) => p.textContent);
+            }
           } else {
-            value = as.map((a) => a.href);
+            value = row.children[1].textContent;
           }
-        } else if (col.querySelector('img')) {
-          const imgs = [...col.querySelectorAll('img')];
-          if (imgs.length === 1) {
-            value = imgs[0].src;
-          } else {
-            value = imgs.map((img) => img.src);
-          }
-        } else if (col.querySelector('p')) {
-          const ps = [...col.querySelectorAll('p')];
-          if (ps.length === 1) {
-            value = ps[0].textContent;
-          } else {
-            value = ps.map((p) => p.textContent);
-          }
-        } else value = row.children[1].textContent;
-        config[name] = value;
+          config[name] = value;
+        }
       }
-    }
-  });
+    });
   return config;
 }
 
@@ -357,9 +380,10 @@ function createOptimizedPicture(
  */
 function decorateTemplateAndTheme() {
   const addClasses = (element, classes) => {
-    classes.split(',').forEach((c) => {
-      element.classList.add(toClassName(c.trim()));
-    });
+    classes.split(',')
+      .forEach((c) => {
+        element.classList.add(toClassName(c.trim()));
+      });
   };
   const template = getMetadata('template');
   if (template) addClasses(document.body, template);
@@ -393,20 +417,21 @@ function wrapTextNodes(block) {
     el.append(wrapper);
   };
 
-  block.querySelectorAll(':scope > div > div').forEach((blockColumn) => {
-    if (blockColumn.hasChildNodes()) {
-      const hasWrapper = !!blockColumn.firstElementChild
-        && validWrappers.some((tagName) => blockColumn.firstElementChild.tagName === tagName);
-      if (!hasWrapper) {
-        wrap(blockColumn);
-      } else if (
-        blockColumn.firstElementChild.tagName === 'PICTURE'
-        && (blockColumn.children.length > 1 || !!blockColumn.textContent.trim())
-      ) {
-        wrap(blockColumn);
+  block.querySelectorAll(':scope > div > div')
+    .forEach((blockColumn) => {
+      if (blockColumn.hasChildNodes()) {
+        const hasWrapper = !!blockColumn.firstElementChild
+          && validWrappers.some((tagName) => blockColumn.firstElementChild.tagName === tagName);
+        if (!hasWrapper) {
+          wrap(blockColumn);
+        } else if (
+          blockColumn.firstElementChild.tagName === 'PICTURE'
+          && (blockColumn.children.length > 1 || !!blockColumn.textContent.trim())
+        ) {
+          wrap(blockColumn);
+        }
       }
-    }
-  });
+    });
 }
 
 /**
@@ -414,37 +439,38 @@ function wrapTextNodes(block) {
  * @param {Element} element container element
  */
 function decorateButtons(element) {
-  element.querySelectorAll('a').forEach((a) => {
-    a.title = a.title || a.textContent;
-    if (a.href !== a.textContent) {
-      const up = a.parentElement;
-      const twoup = a.parentElement.parentElement;
-      if (!a.querySelector('img')) {
-        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
-          a.className = 'button'; // default
-          up.classList.add('button-container');
-        }
-        if (
-          up.childNodes.length === 1
-          && up.tagName === 'STRONG'
-          && twoup.childNodes.length === 1
-          && twoup.tagName === 'P'
-        ) {
-          a.className = 'button primary';
-          twoup.classList.add('button-container');
-        }
-        if (
-          up.childNodes.length === 1
-          && up.tagName === 'EM'
-          && twoup.childNodes.length === 1
-          && twoup.tagName === 'P'
-        ) {
-          a.className = 'button secondary';
-          twoup.classList.add('button-container');
+  element.querySelectorAll('a')
+    .forEach((a) => {
+      a.title = a.title || a.textContent;
+      if (a.href !== a.textContent) {
+        const up = a.parentElement;
+        const twoup = a.parentElement.parentElement;
+        if (!a.querySelector('img')) {
+          if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
+            a.className = 'button'; // default
+            up.classList.add('button-container');
+          }
+          if (
+            up.childNodes.length === 1
+            && up.tagName === 'STRONG'
+            && twoup.childNodes.length === 1
+            && twoup.tagName === 'P'
+          ) {
+            a.className = 'button primary';
+            twoup.classList.add('button-container');
+          }
+          if (
+            up.childNodes.length === 1
+            && up.tagName === 'EM'
+            && twoup.childNodes.length === 1
+            && twoup.tagName === 'P'
+          ) {
+            a.className = 'button secondary';
+            twoup.classList.add('button-container');
+          }
         }
       }
-    }
-  });
+    });
 }
 
 /**
@@ -482,41 +508,43 @@ function decorateIcons(element, prefix = '') {
  * @param {Element} main The container element
  */
 function decorateSections(main) {
-  main.querySelectorAll(':scope > div').forEach((section) => {
-    const wrappers = [];
-    let defaultContent = false;
-    [...section.children].forEach((e) => {
-      if (e.tagName === 'DIV' || !defaultContent) {
-        const wrapper = document.createElement('div');
-        wrappers.push(wrapper);
-        defaultContent = e.tagName !== 'DIV';
-        if (defaultContent) wrapper.classList.add('default-content-wrapper');
-      }
-      wrappers[wrappers.length - 1].append(e);
-    });
-    wrappers.forEach((wrapper) => section.append(wrapper));
-    section.classList.add('section');
-    section.dataset.sectionStatus = 'initialized';
-    section.style.display = 'none';
-
-    // Process section metadata
-    const sectionMeta = section.querySelector('div.section-metadata');
-    if (sectionMeta) {
-      const meta = readBlockConfig(sectionMeta);
-      Object.keys(meta).forEach((key) => {
-        if (key === 'style') {
-          const styles = meta.style
-            .split(',')
-            .filter((style) => style)
-            .map((style) => toClassName(style.trim()));
-          styles.forEach((style) => section.classList.add(style));
-        } else {
-          section.dataset[toCamelCase(key)] = meta[key];
+  main.querySelectorAll(':scope > div')
+    .forEach((section) => {
+      const wrappers = [];
+      let defaultContent = false;
+      [...section.children].forEach((e) => {
+        if (e.tagName === 'DIV' || !defaultContent) {
+          const wrapper = document.createElement('div');
+          wrappers.push(wrapper);
+          defaultContent = e.tagName !== 'DIV';
+          if (defaultContent) wrapper.classList.add('default-content-wrapper');
         }
+        wrappers[wrappers.length - 1].append(e);
       });
-      sectionMeta.parentNode.remove();
-    }
-  });
+      wrappers.forEach((wrapper) => section.append(wrapper));
+      section.classList.add('section');
+      section.dataset.sectionStatus = 'initialized';
+      section.style.display = 'none';
+
+      // Process section metadata
+      const sectionMeta = section.querySelector('div.section-metadata');
+      if (sectionMeta) {
+        const meta = readBlockConfig(sectionMeta);
+        Object.keys(meta)
+          .forEach((key) => {
+            if (key === 'style') {
+              const styles = meta.style
+                .split(',')
+                .filter((style) => style)
+                .map((style) => toClassName(style.trim()));
+              styles.forEach((style) => section.classList.add(style));
+            } else {
+              section.dataset[toCamelCase(key)] = meta[key];
+            }
+          });
+        sectionMeta.parentNode.remove();
+      }
+    });
 }
 
 /**
@@ -627,7 +655,7 @@ async function loadBlock(block) {
           try {
             const mod = await import(
               `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`
-            );
+              );
             if (mod.default) {
               await mod.default(block);
             }
@@ -685,7 +713,8 @@ function decorateBlock(block) {
  * @param {Element} main The container element
  */
 function decorateBlocks(main) {
-  main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
+  main.querySelectorAll('div.section > div > div')
+    .forEach(decorateBlock);
 }
 
 /**
@@ -763,3 +792,7 @@ export {
   waitForLCP,
   wrapTextNodes,
 };
+
+export function getOrigin() {
+  return window.location.href === 'about:srcdoc' ? window.parent.location.origin : window.location.origin;
+}

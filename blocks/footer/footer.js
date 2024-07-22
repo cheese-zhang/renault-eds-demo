@@ -10,11 +10,83 @@ export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
-
-  // decorate footer DOM
+  // render the country choose block
   block.textContent = '';
-  const footer = document.createElement('div');
-  while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+  block.append(fragment.firstElementChild);
+  // decorate footer DOM
+  const footerContainer = document.createElement('div');
+  footerContainer.className = 'c-footer u-global-margin';
 
-  block.append(footer);
+  while (fragment.firstElementChild) {
+    const section = fragment.firstElementChild;
+    const footerContent = section.cloneNode(true);
+    section.className = 'c-footer__content';
+
+    section.textContent = '';
+
+    const footerUlElement = footerContent.querySelector('div > ul');
+
+    switch (footerContent.getAttribute('data-position')) {
+      case 'first':
+        // deal logo
+        const footerLogo = footerContent.querySelector('div > p > a');
+        if (footerLogo) {
+          const footerLogoContainer = document.createElement('div');
+          footerLogoContainer.id = 'block-marquedusite';
+          footerLogoContainer.append(footerLogo);
+          section.append(footerLogoContainer);
+        }
+        if (footerUlElement) {
+          footerUlElement.className = 'u-list';
+          section.append(footerUlElement);
+        }
+        footerUlElement.classList.add('c-footer__link');
+        const footerPElement = footerContent.querySelector('div > p:last-child');
+        if (footerPElement) {
+          const footerSlogan = document.createElement('div');
+          footerSlogan.className = 'c-footer__slogan';
+          footerSlogan.textContent = footerPElement.textContent;
+          section.append(footerSlogan);
+        }
+        break;
+      case 'last':
+        if (footerUlElement) {
+          footerUlElement.className = 'u-list';
+          section.append(footerUlElement);
+        }
+        footerUlElement.classList.add('c-footer__social-icons');
+        section.classList.add('last-item');
+        const footerIconsUl = section.querySelectorAll('ul > li');
+        footerIconsUl.forEach((liElement) => {
+          liElement.querySelector('span').className = '';
+          liElement.querySelector('img').className = 'icon';
+          const separator = document.createElement('i');
+          separator.className = 'separator';
+          liElement.append(separator);
+        });
+        // add contact and other buttons
+        const footerCopyright = document.createElement('div');
+        footerCopyright.className = 'c-footer__copyright c-contact-btn';
+        const titles = footerContent.querySelectorAll('p');
+        const links = footerContent.querySelectorAll('p > a');
+        const icons = footerContent.querySelectorAll('p > a > span > img');
+        links.forEach((link, i) => {
+          link.textContent = titles[i].textContent;
+          link.append(icons[i]);
+          footerCopyright.append(link);
+        });
+        section.querySelector('ul')
+          .after(footerCopyright);
+        break;
+      default:
+        if (footerUlElement) {
+          footerUlElement.className = 'u-list';
+          section.append(footerUlElement);
+        }
+        footerUlElement.classList.add('c-footer__link');
+        break;
+    }
+    footerContainer.append(section);
+  }
+  block.append(footerContainer);
 }

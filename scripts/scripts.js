@@ -64,7 +64,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
-  buildAutoBlocks(main);
+  // buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
 }
@@ -80,6 +80,8 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
+    document.body.classList.add('home-page');
+    document.body.classList.add('node--type-homepage');
     await waitForLCP(LCP_BLOCKS);
   }
 
