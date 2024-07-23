@@ -1,7 +1,7 @@
 import { readBlockConfig } from '../../scripts/aem.js';
 
 export default function decorate(block) {
-  const config = readBlockConfig(block);
+  const config = readBlockConfig(block, false);
   const disclaimerPath = config.disclaimer || '/news-and-stories/press-releases';
 
   fetch(`${disclaimerPath}/disclaimer.plain.html`)

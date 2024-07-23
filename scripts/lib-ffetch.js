@@ -389,9 +389,9 @@ async function buildElements(pressReleases, filter, createFilters, buildPressRel
   accordionItem.className = 'c-accordion__item active';
   accordionDiv.appendChild(accordionItem);
 
-  const accordionTitle = document.createElement('h2');
-  accordionTitle.className = 'c-accordion__heading c-accordion__title js-accordion h2-like--chevron-left';
-  accordionItem.appendChild(accordionTitle);
+  // const accordionTitle = document.createElement('h2');
+  // accordionTitle.className = 'c-accordion__heading c-accordion__title js-accordion h2-like--chevron-left';
+  // accordionItem.appendChild(accordionTitle);
 
   const accordionContent = document.createElement('div');
   accordionContent.className = 'c-accordion__content';
@@ -419,7 +419,7 @@ async function buildElements(pressReleases, filter, createFilters, buildPressRel
 
 export async function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
   /* eslint-disable no-use-before-define */
-  const cfg = readBlockConfig(mainEl);
+  const cfg = readBlockConfig(mainEl, false);
 
   async function reloadList(params) {
     // push the new querystring state
@@ -441,6 +441,16 @@ export async function createList(pressReleases, filter, createFilters, buildPres
     reloadList(new URL(event.target.href).searchParams);
   }
 
+  function attachTitle(title) {
+    const titleContainer = document.createElement('h2');
+    titleContainer.className = 'h2-like--chevron-bottom';
+    titleContainer.textContent = 'Company news';
+    if (title) {
+      titleContainer.textContent = title;
+    }
+    return titleContainer;
+  }
+
   function attachSubmitListners(filter) {
     const form = filter.querySelector('form');
     if (form) {
@@ -459,9 +469,12 @@ export async function createList(pressReleases, filter, createFilters, buildPres
   function renderList(el, {
     filter,
     pagination,
-    list
+    list,
   }) {
     const children = [];
+    // add title in homepage
+    const withTitle = el.classList.contains('with-title');
+    if (withTitle) children.push(attachTitle());
     if (filter) children.push(attachSubmitListners(filter));
     if (pagination) children.push(attachClickListners(pagination));
     children.push(list);

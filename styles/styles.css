@@ -456,7 +456,6 @@ a {
 
 abbr[title] {
     border-bottom: none;
-    text-decoration: underline dotted;
     text-decoration: underline dotted
 }
 
@@ -606,8 +605,6 @@ fieldset {
 blockquote {
     position: relative;
     width: fit-content;
-    width: fit-content;
-    width: fit-content;
     padding-right: 1.5rem;
     margin: 1rem;
     font-family: "DIN Pro", Arial, sans-serif;
@@ -650,7 +647,6 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
     padding: 1rem;
     border: .1rem solid #000;
     appearance: none;
-    appearance: none;
     background-color: #fff;
     color: #000;
     font-size: 1.2rem;
@@ -658,21 +654,21 @@ input[type="email"], input[type="number"], input[type="password"], input[type="s
     transition: border-color .3s
 }
 
-input[type="email"]::placeholder, input[type="number"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="search"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="text"]::-moz-placeholder, textarea::-moz-placeholder {
+input[type="email"]::placeholder, input[type="number"]::placeholder, input[type="password"]::placeholder, input[type="search"]::placeholder, input[type="tel"]::-moz-placeholder, input[type="text"]::-moz-placeholder, textarea::-moz-placeholder {
     color: rgb(0 0 0 / 45%);
     font-family: "DIN Pro", Arial, sans-serif;
     font-size: 1.2rem;
     font-weight: 400
 }
 
-input[type="email"]::input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="search"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="text"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+input[type="email"]::input-placeholder, input[type="number"]::input-placeholder, input[type="password"]::input-placeholder, input[type="search"]::input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="text"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     color: rgb(0 0 0 / 45%);
     font-family: "DIN Pro", Arial, sans-serif;
     font-size: 1.2rem;
     font-weight: 400
 }
 
-input[type="email"]:input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="search"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="text"]:-ms-input-placeholder, textarea:-ms-input-placeholder {
+input[type="email"]:input-placeholder, input[type="number"]:input-placeholder, input[type="password"]:input-placeholder, input[type="search"]:input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="text"]:-ms-input-placeholder, textarea:-ms-input-placeholder {
     color: rgb(0 0 0 / 45%);
     font-family: "DIN Pro", Arial, sans-serif;
     font-size: 1.2rem;
@@ -705,7 +701,7 @@ dl dt {
     display: inline-block
 }
 
-dl dt:after {
+dl dt::after {
     margin: 0 .5rem;
     content: ":"
 }
@@ -719,8 +715,8 @@ audio, canvas, iframe, img, svg, video {
     vertical-align: middle
 }
 
-@media only screen and (max-width: 600px) {
-    .h2-like--chevron-bottom:before, h2--chevron-bottom:before {
+@media only screen and (width <= 600px) {
+    .h2-like--chevron-bottom::before, h2--chevron-bottom::before {
         top: 10.65rem
     }
 }
@@ -770,7 +766,7 @@ ul:not(.toolbar-menu) li {
     margin-left: 1rem
 }
 
-ul:not(.toolbar-menu) li:before {
+ul:not(.toolbar-menu) li::before {
     position: absolute;
     top: 12px;
     left: -2rem;
@@ -778,13 +774,14 @@ ul:not(.toolbar-menu) li:before {
     content: "";
     width: 1px;
     height: 7px;
-    /*background-image: url(/themes/custom/corporate/styles/src/assets/images/rectangle.svg);*/
+
+    /* background-image: url(/themes/custom/corporate/styles/src/assets/images/rectangle.svg); */
     background-size: contain;
     background-repeat: no-repeat;
     transform: translateY(-50%)
 }
 
-.ck.ck-editor__main ul:not(.toolbar-menu) li:before, .select2-selection ul:not(.toolbar-menu) li:before {
+.ck.ck-editor__main ul:not(.toolbar-menu) li::before, .select2-selection ul:not(.toolbar-menu) li::before {
     position: relative !important
 }
 
@@ -792,7 +789,7 @@ dl dt {
     display: inline-block
 }
 
-dl dt:after {
+dl dt::after {
     margin: 0 .5rem;
     content: ":"
 }
@@ -808,7 +805,7 @@ audio, canvas, iframe, img, svg, video {
 
 html {
     min-height: 100%;
-    font-family: DIN Pro, Arial, sans-serif;
+    font-family: "DIN Pro", Arial, sans-serif;
     font-size: .625em;
     line-height: 1.4
 }
@@ -825,7 +822,7 @@ body {
     overflow-x: hidden
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     body {
         font-size: 1.4rem
     }
@@ -833,10 +830,7 @@ body {
 
 body.overflow-hidden {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     overflow: hidden
 }
 
@@ -844,13 +838,13 @@ body:not(.home-page) #content {
     padding-top: 12.8rem
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     body:not(.home-page) #content {
         padding-top: 7.8rem
     }
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     body .c-global-newsroom {
         display: flex;
         flex-direction: column
@@ -878,15 +872,15 @@ table {
 
 table th {
     padding: 1.6rem 4.8rem;
-    background: rgba(217, 218, 219, .45);
+    background: rgb(217 218 219 / 45%);
     color: #232323;
-    font-family: DIN Pro, Arial, sans-serif;
+    font-family: "DIN Pro", Arial, sans-serif;
     font-weight: 700;
     text-align: left;
     text-transform: uppercase
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     table th {
         padding: 1.6rem
     }
@@ -897,21 +891,21 @@ table tbody {
 }
 
 table tr {
-    box-shadow: inset 0 -1px 0 rgba(217, 218, 219, .4)
+    box-shadow: inset 0 -1px 0 rgb(217 218 219 / 40%)
 }
 
 table td {
     padding: 1.6rem 4.8rem
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     table td {
         padding: 1.6rem
     }
 }
 
 hr {
-    border: .1rem solid rgba(0, 0, 0, .1);
+    border: .1rem solid rgb(0 0 0 / 10%);
     background-color: initial
 }
 
@@ -919,12 +913,12 @@ progress {
     max-width: 15rem;
     height: .8rem;
     border: none;
-    background-color: rgba(217, 218, 219, .4);
+    background-color: rgb(217 218 219 / 40%);
     color: #e3021b
 }
 
 progress::-webkit-progress-bar {
-    background-color: rgba(217, 218, 219, .4)
+    background-color: rgb(217 218 219 / 40%)
 }
 
 progress::-moz-progress-bar {
@@ -935,29 +929,7 @@ progress::-webkit-progress-value {
     background: #e3021b
 }
 
-/*c_btn*/
-.c-btn--icon-arrow {
-    padding: 20px 56px 20px 24px
-}
 
-.c-btn--icon-arrow:after {
-    /*background-image: url(/themes/custom/corporate/styles/src/assets/images/arrow-cta.svg);*/
-    position: absolute;
-    background-size: contain;
-    background-repeat: no-repeat;
-    content: "";
-    width: 1.8rem;
-    height: 2.1rem;
-    top: 0;
-    bottom: 0;
-    margin: auto 0 auto 1.1rem;
-    transition: all .3s ease-in-out
-}
-
-.c-btn--icon-arrow:hover:after {
-    /*background-image: url(/themes/custom/corporate/styles/src/assets/images/Union.svg);*/
-    transition: all .3s ease-in-out
-}
 
 .c-btn--dark {
     background: #232323;
@@ -999,7 +971,7 @@ progress::-webkit-progress-value {
     background: transparent;
     cursor: pointer;
     font: inherit;
-    font-family: DIN Pro, Arial, sans-serif;
+    font-family: "DIN Pro", Arial, sans-serif;
     font-size: 1.4rem;
     font-weight: 700;
     text-align: center;
@@ -1013,7 +985,29 @@ progress::-webkit-progress-value {
     padding: 1.4rem 5rem;
     border: 0
 }
+/* c_btn */
+.c-btn--icon-arrow {
+    padding: 20px 56px 20px 24px
+}
 
+.c-btn--icon-arrow::after {
+    background-image: url("../icons/arrow-cta.svg");
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    content: "";
+    width: 1.8rem;
+    height: 2.1rem;
+    top: 0;
+    bottom: 0;
+    margin: auto 0 auto 1.1rem;
+    transition: all .3s ease-in-out
+}
+
+.c-btn--icon-arrow:hover::after {
+    /* background-image: url(/themes/custom/corporate/styles/src/assets/images/Union.svg); */
+    transition: all .3s ease-in-out
+}
 .c-btn--no-style {
     padding: 0;
     border: none;
@@ -1038,7 +1032,7 @@ progress::-webkit-progress-value {
     color: #fff
 }
 
-.c-btn--arrow:after {
+.c-btn--arrow::after {
     position: absolute;
     top: 55%;
     margin-left: .5rem;
@@ -1055,7 +1049,7 @@ progress::-webkit-progress-value {
     color: #fff
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     .c-btn--phone {
         width: 100%;
         margin: 1.3em 0
@@ -1084,7 +1078,7 @@ progress::-webkit-progress-value {
     display: none
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     .c-btn--outline {
         width: 100%;
         margin-left: 0
@@ -1101,7 +1095,7 @@ progress::-webkit-progress-value {
     margin-right: 10px
 }
 
-.c-btn--outline__icon .icon-star:before {
+.c-btn--outline__icon .icon-star::before {
     transition: .3s
 }
 
@@ -1122,7 +1116,7 @@ progress::-webkit-progress-value {
     opacity: 1
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     .c-btn--full {
         width: 100%
     }
@@ -1225,7 +1219,7 @@ progress::-webkit-progress-value {
     padding: 0 8rem
 }
 
-.c-banner__btn:before, .c-btn--chevron:before, .c-footer__copyright a[href*="/contact"]:before {
+.c-banner__btn::before, .c-btn--chevron::before, .c-footer__copyright a[href*="/contact"]::before {
     content: "";
     position: absolute;
     top: 0;
@@ -1238,7 +1232,7 @@ progress::-webkit-progress-value {
     border-bottom: 24px solid transparent
 }
 
-.c-banner__btn:after, .c-btn--chevron:after, .c-footer__copyright a[href*="/contact"]:after {
+.c-banner__btn::after, .c-btn--chevron::after, .c-footer__copyright a[href*="/contact"]::after {
     content: "";
     position: absolute;
     top: 0;
@@ -1261,7 +1255,7 @@ progress::-webkit-progress-value {
     margin: 0 !important;
 }
 
-.u-list li:before {
+.u-list li::before {
     content: none !important
 }
 
@@ -1270,12 +1264,12 @@ progress::-webkit-progress-value {
     color: #fff
 }
 
-.c-banner__btn:active:before, .c-banner__btn:focus:before, .c-banner__btn:hover:before, .c-btn--chevron:active:before, .c-btn--chevron:focus:before, .c-btn--chevron:hover:before, .c-footer__copyright a[href*="/contact"]:active:before, .c-footer__copyright a[href*="/contact"]:focus:before, .c-footer__copyright a[href*="/contact"]:hover:before {
+.c-banner__btn:active::before, .c-banner__btn:focus::before, .c-banner__btn:hover::before, .c-btn--chevron:active::before, .c-btn--chevron:focus::before, .c-btn--chevron:hover::before, .c-footer__copyright a[href*="/contact"]:active::before, .c-footer__copyright a[href*="/contact"]:focus::before, .c-footer__copyright a[href*="/contact"]:hover::before {
     border-right-color: #ca2033;
     transition: all .3s ease-in-out
 }
 
-.c-banner__btn:active:after, .c-banner__btn:focus:after, .c-banner__btn:hover:after, .c-btn--chevron:active:after, .c-btn--chevron:focus:after, .c-btn--chevron:hover:after, .c-footer__copyright a[href*="/contact"]:active:after, .c-footer__copyright a[href*="/contact"]:focus:after, .c-footer__copyright a[href*="/contact"]:hover:after {
+.c-banner__btn:active::after, .c-banner__btn:focus::after, .c-banner__btn:hover::after, .c-btn--chevron:active::after, .c-btn--chevron:focus::after, .c-btn--chevron:hover::after, .c-footer__copyright a[href*="/contact"]:active::after, .c-footer__copyright a[href*="/contact"]:focus::after, .c-footer__copyright a[href*="/contact"]:hover::after {
     border-left-color: #ca2033;
     transition: all .3s ease-in-out
 }
@@ -1364,7 +1358,7 @@ progress::-webkit-progress-value {
     width: 100% !important
 }
 
-@media (max-width: 119.99em) {
+@media (width <= 119.99em) {
     .u-1\/1\@desktop {
         width: 100% !important
     }
@@ -1450,7 +1444,7 @@ progress::-webkit-progress-value {
     }
 }
 
-@media (max-width: 88.74em) {
+@media (width <= 88.74em) {
     .u-1\/1\@laptop {
         width: 100% !important
     }
@@ -1536,7 +1530,7 @@ progress::-webkit-progress-value {
     }
 }
 
-@media (max-width: 63.99em) {
+@media (width <= 63.99em) {
     .u-1\/1\@tablet {
         width: 100% !important
     }
@@ -1622,7 +1616,7 @@ progress::-webkit-progress-value {
     }
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     .u-1\/1\@phablet {
         width: 100% !important
     }
@@ -1708,7 +1702,7 @@ progress::-webkit-progress-value {
     }
 }
 
-@media (max-width: 29.99em) {
+@media (width <= 29.99em) {
     .u-1\/1\@mobile {
         width: 100% !important
     }
@@ -2096,7 +2090,7 @@ div.block div.pager .pagination .scroll li a {
     font-family: var(--ff-volvo-novum-medium);
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (width >= 480px) {
     div:where([role="dialog"]) .section.tabbed-container ul.tab-navigation li,
     main .section.tabbed-container ul.tab-navigation li {
         margin: 0 3%;
@@ -2109,13 +2103,13 @@ div.block div.pager .pagination .scroll li a {
     margin-top: 2rem;
     margin-bottom: 2rem;
     color: #000;
-    font-family: DIN Pro;
+    font-family: "DIN Pro";
     font-size: 4.7rem;
     font-weight: 700;
     line-height: 1.2
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     .h1-like, h1 {
         font-size: 3.8rem
     }
@@ -2124,7 +2118,7 @@ div.block div.pager .pagination .scroll li a {
 .h2-like, h2 {
     position: relative;
     color: #000;
-    font-family: DIN Pro;
+    font-family: "DIN Pro";
     font-size: 2.5rem;
     font-weight: 700
 }
@@ -2133,7 +2127,7 @@ div.block div.pager .pagination .scroll li a {
     margin: 0 0 0 2rem
 }
 
-.h2-like--chevron-left:before, h2--chevron-left:before {
+.h2-like--chevron-left::before, h2--chevron-left::before {
     position: absolute;
     background-size: contain;
     background-repeat: no-repeat;
@@ -2142,15 +2136,15 @@ div.block div.pager .pagination .scroll li a {
     left: -2rem;
     width: 1rem;
     height: 3rem;
-    background-image: url(/themes/custom/corporate/styles/src/assets/images/chevron-headings.svg)
+    background-image: url("../icons/separateur-chevron.svg")
 }
 
 .h2-like--chevron-bottom, h2--chevron-bottom {
-    margin: 0 0 8rem;
+    /* margin: 0 0 8rem; */
     text-align: center
 }
 
-.h2-like--chevron-bottom:before, h2--chevron-bottom:before {
+.h2-like--chevron-bottom::before, h2--chevron-bottom::before {
     position: absolute;
     background-size: contain;
     background-repeat: no-repeat;
@@ -2160,7 +2154,7 @@ div.block div.pager .pagination .scroll li a {
     height: 1.5rem;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-image: url(/themes/custom/corporate/styles/src/assets/images/separateur-chevron.svg)
+    background-image: url("../icons/separateur-chevron.svg")
 }
 
 .h2-like--chevron-bottom--white, h2--chevron-bottom--white {
@@ -2168,7 +2162,7 @@ div.block div.pager .pagination .scroll li a {
     text-align: center
 }
 
-.h2-like--chevron-bottom--white:before, h2--chevron-bottom--white:before {
+.h2-like--chevron-bottom--white::before, h2--chevron-bottom--white::before {
     position: absolute;
     background-size: contain;
     background-repeat: no-repeat;
@@ -2178,14 +2172,14 @@ div.block div.pager .pagination .scroll li a {
     height: 1.5rem;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-image: url(/themes/custom/corporate/styles/src/assets/images/separateur-chevron-white.svg)
+    background-image: url("../icons/separateur-chevron-white.svg")
 }
 
 .h2-like--simple, h2--simple {
     margin: 0
 }
 
-.h2-like--simple:before, h2--simple:before {
+.h2-like--simple::before, h2--simple::before {
     content: none
 }
 
@@ -2194,30 +2188,30 @@ div.block div.pager .pagination .scroll li a {
     font-size: 2rem
 }
 
-.h2-like--small:before, h2--small:before {
+.h2-like--small::before, h2--small::before {
     top: .5rem;
     left: 0;
     height: 1.8rem
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     .h2-like, h2 {
         font-size: 2.5rem
     }
 
-    .h2-like:before, h2:before {
+    .h2-like::before, h2::before {
         top: 0
     }
 }
 
 .h3-like, h3 {
     color: #000;
-    font-family: DIN Pro;
+    font-family: "DIN Pro";
     font-size: 2.5rem;
     font-weight: 700
 }
 
-@media (max-width: 47.99em) {
+@media (width <= 47.99em) {
     .h3-like, h3 {
         font-size: 2.2rem
     }
@@ -2225,14 +2219,14 @@ div.block div.pager .pagination .scroll li a {
 
 .h4-like, h4 {
     margin: 0;
-    font-family: DIN Pro;
+    font-family: "DIN Pro";
     font-size: 2.5rem;
     font-weight: 400
 }
 
 .h5-like, .h6-like, h5, h6 {
     margin: 2rem 0;
-    font-family: DIN Pro;
+    font-family: "DIN Pro";
     font-size: 1.6rem;
     font-weight: 400
 }
@@ -2241,12 +2235,41 @@ div.block div.pager .pagination .scroll li a {
     color: #fff
 }
 
-@media only screen and (max-width: 600px) {
-    .h2-like--chevron-bottom:before, h2--chevron-bottom:before {
+@media only screen and (width <= 600px) {
+    .h2-like--chevron-bottom::before, h2--chevron-bottom::before {
         top: 10.65rem
     }
 }
 
-.icon-arrow-cta {
+.icon-arrow-cta , .icon-arrow-cta-wt {
     margin-left: 1.688rem;
+}
+
+.c-structured-keyfigures {
+    padding: 4rem 0;
+    background: rgb(217 218 219 / 35%)
+}
+.u-padding-vertical--lg {
+    padding-top: 6rem!important;
+    padding-bottom: 6rem!important
+}
+.u-padding-vertical--xl {
+    padding-top: 8rem!important;
+    padding-bottom: 8rem!important
+}
+.u-background--dark,.u-background--darker {
+    background-color: #494949
+}
+.c-link--white::after{
+    background-image: url("../icons/arrow-cta-wt.svg");
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    content: "";
+    width: 1.8rem;
+    height: 2.1rem;
+    bottom: 3em;
+}
+.h2-like-section,h2 {
+    margin-left: 2rem
 }

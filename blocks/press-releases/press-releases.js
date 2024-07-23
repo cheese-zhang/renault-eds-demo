@@ -144,7 +144,7 @@ export default async function decorate(block) {
   }
 
   if (isLatest) {
-    const cfg = readBlockConfig(block);
+    const cfg = readBlockConfig(block, false);
     const filter = cfg.tags && createPressReleaseFilterFunction({ tags: toClassName(cfg.tags) });
     const pressReleases = await getPressReleases(3, filter);
     createLatestPressReleases(block, pressReleases);

@@ -226,10 +226,11 @@ function toCamelCase(name) {
 /**
  * Extracts the config from a block.
  * @param {Element} block The block element
+ * @param noClass not use toClass func
  * @returns {object} The block config
  */
 // eslint-disable-next-line import/prefer-default-export
-function readBlockConfig(block) {
+function readBlockConfig(block, noClass) {
   const config = {};
   block.querySelectorAll(':scope > div')
     .forEach((row) => {
@@ -237,7 +238,13 @@ function readBlockConfig(block) {
         const cols = [...row.children];
         if (cols[1]) {
           const col = cols[1];
-          const name = toClassName(cols[0].textContent);
+          let name = '';
+          if (noClass) {
+            name = cols[0].textContent;
+          } else {
+            name = toClassName(cols[0].textContent);
+          }
+
           let value = '';
           if (col.querySelector('a')) {
             const as = [...col.querySelectorAll('a')];
@@ -340,7 +347,10 @@ function createOptimizedPicture(
   src,
   alt = '',
   eager = false,
-  breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
+  breakpoints = [{
+    media: '(min-width: 600px)',
+    width: '2000',
+  }, { width: '750' }],
 ) {
   const url = new URL(src, window.location.href);
   const picture = document.createElement('picture');
@@ -791,8 +801,24 @@ export {
   updateSectionsStatus,
   waitForLCP,
   wrapTextNodes,
+  transform,
 };
 
 export function getOrigin() {
   return window.location.href === 'about:srcdoc' ? window.parent.location.origin : window.location.origin;
+}
+
+function transform(a, b) {
+  let children = parseInt(a.toFixed(2) * 100, 10); // 分子
+  let parent = parseInt(b.toFixed(2) * 100, 10); // 分母
+  let min = Math.min(children, parent); // 较小的
+  // eslint-disable-next-line no-plusplus
+  for (let i = min; i > 1; i--) {
+    if (!(children % i) && !(parent % i)) {
+      children /= i;
+      parent /= i;
+      min = Math.min(children, parent);
+    }
+  }
+  return `${children}/${parent}`;
 }
