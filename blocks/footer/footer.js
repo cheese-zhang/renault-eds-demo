@@ -29,6 +29,7 @@ export default async function decorate(block) {
     switch (footerContent.getAttribute('data-position')) {
       case 'first':
         // deal logo
+        // eslint-disable-next-line no-case-declarations
         const footerLogo = footerContent.querySelector('div > p > a');
         if (footerLogo) {
           const footerLogoContainer = document.createElement('div');
@@ -41,6 +42,7 @@ export default async function decorate(block) {
           section.append(footerUlElement);
         }
         footerUlElement.classList.add('c-footer__link');
+        // eslint-disable-next-line no-case-declarations
         const footerPElement = footerContent.querySelector('div > p:last-child');
         if (footerPElement) {
           const footerSlogan = document.createElement('div');
@@ -56,6 +58,7 @@ export default async function decorate(block) {
         }
         footerUlElement.classList.add('c-footer__social-icons');
         section.classList.add('last-item');
+        // eslint-disable-next-line no-case-declarations
         const footerIconsUl = section.querySelectorAll('ul > li');
         footerIconsUl.forEach((liElement) => {
           liElement.querySelector('span').className = '';
@@ -65,10 +68,14 @@ export default async function decorate(block) {
           liElement.append(separator);
         });
         // add contact and other buttons
+        // eslint-disable-next-line no-case-declarations
         const footerCopyright = document.createElement('div');
         footerCopyright.className = 'c-footer__copyright c-contact-btn';
+        // eslint-disable-next-line no-case-declarations
         const titles = footerContent.querySelectorAll('p');
+        // eslint-disable-next-line no-case-declarations
         const links = footerContent.querySelectorAll('p > a');
+        // eslint-disable-next-line no-case-declarations
         const icons = footerContent.querySelectorAll('p > a > span > img');
         links.forEach((link, i) => {
           link.textContent = titles[i].textContent;

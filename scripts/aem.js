@@ -28,7 +28,7 @@ function sampleRUM(checkpoint, data = {}) {
   const defer = (fnname) => {
     sampleRUM[fnname] = sampleRUM[fnname] || ((...args) => sampleRUM.defer.push({
       fnname,
-      args
+      args,
     }));
   };
   sampleRUM.drain = sampleRUM.drain
@@ -38,7 +38,7 @@ function sampleRUM(checkpoint, data = {}) {
         .filter(({ fnname }) => dfnname === fnname)
         .forEach(({
           fnname,
-          args
+          args,
         }) => sampleRUM[fnname](...args));
     });
   sampleRUM.always = sampleRUM.always || [];
@@ -81,7 +81,7 @@ function sampleRUM(checkpoint, data = {}) {
     const {
       weight,
       id,
-      firstReadTime
+      firstReadTime,
     } = window.hlx.rum;
     if (window.hlx && window.hlx.rum && window.hlx.rum.isSelected) {
       const knownProperties = [
@@ -111,7 +111,8 @@ function sampleRUM(checkpoint, data = {}) {
             id,
             referer: window.hlx.rum.sanitizeURL(),
             checkpoint,
-            t, ...data,
+            t,
+            ...data,
           },
           knownProperties,
         );
@@ -179,7 +180,7 @@ function init() {
   ['error', 'unhandledrejection'].forEach((event) => {
     window.addEventListener(event, ({
       reason,
-      error
+      error,
     }) => {
       const errData = { source: 'undefined error' };
       try {
@@ -665,7 +666,7 @@ async function loadBlock(block) {
           try {
             const mod = await import(
               `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`
-              );
+            );
             if (mod.default) {
               await mod.default(block);
             }
@@ -773,7 +774,21 @@ async function waitForLCP(lcpBlocks) {
     }
   });
 }
-
+// get dynamic width style
+function transform(a, b) {
+  let children = parseInt(a.toFixed(2) * 100, 10); // 分子
+  let parent = parseInt(b.toFixed(2) * 100, 10); // 分母
+  let min = Math.min(children, parent); // 较小的
+  // eslint-disable-next-line no-plusplus
+  for (let i = min; i > 1; i--) {
+    if (!(children % i) && !(parent % i)) {
+      children /= i;
+      parent /= i;
+      min = Math.min(children, parent);
+    }
+  }
+  return `${children}/${parent}`;
+}
 init();
 
 export {
@@ -806,19 +821,4 @@ export {
 
 export function getOrigin() {
   return window.location.href === 'about:srcdoc' ? window.parent.location.origin : window.location.origin;
-}
-
-function transform(a, b) {
-  let children = parseInt(a.toFixed(2) * 100, 10); // 分子
-  let parent = parseInt(b.toFixed(2) * 100, 10); // 分母
-  let min = Math.min(children, parent); // 较小的
-  // eslint-disable-next-line no-plusplus
-  for (let i = min; i > 1; i--) {
-    if (!(children % i) && !(parent % i)) {
-      children /= i;
-      parent /= i;
-      min = Math.min(children, parent);
-    }
-  }
-  return `${children}/${parent}`;
 }

@@ -1,7 +1,7 @@
 export default class {
   constructor() {
     const defaults = {
-      selector: document.querySelectorAll('.home-page')
+      selector: document.querySelectorAll('.home-page'),
     };
     this.settings = defaults;
     this.init();
@@ -11,14 +11,14 @@ export default class {
     const { selector } = this.settings;
     let position = document.documentElement.scrollTop;
 
-    window.addEventListener('scroll', function (e) {
+    window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY;
       const scrollPositionIE = window.pageYOffset;
       const divCountry = [...document.querySelectorAll('.js-country-position')];
       const menu = [...document.querySelectorAll('.c-header')];
 
       if (selector[0]) {
-        divCountry.forEach(elem => {
+        divCountry.forEach((elem) => {
           if (scrollPosition > elem.offsetTop || scrollPositionIE > elem.offsetTop) {
             selector[0].classList.add('home-page-header__active');
           } else {
@@ -27,7 +27,7 @@ export default class {
         });
       }
 
-      menu.forEach(elem => {
+      menu.forEach((elem) => {
         const lastScroll = document.documentElement.scrollTop || window.pageYOffset;
 
         if (lastScroll > position && lastScroll > 400 && !elem.classList.contains('menuMobileOpen')) {

@@ -1,5 +1,3 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
-
 export default function decorate(block) {
   const spotlightWapper = document.createElement('a');
   spotlightWapper.classList.add('c-spotlight__wrapper');

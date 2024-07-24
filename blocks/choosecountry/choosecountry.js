@@ -12,9 +12,8 @@ export default async function decorate(block) {
         countries = json.data;
         resolve(countries);
       })
-      .catch((e) => {
+      .catch(() => {
         // error
-        console.error(e);
       });
   });
   const countryContainer = document.createElement('div');

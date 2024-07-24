@@ -20,7 +20,7 @@ async function* request(url, context) {
   const {
     chunks,
     sheet,
-    fetch
+    fetch,
   } = context;
   for (let offset = 0, total = Infinity; offset < total; offset += chunks) {
     const params = new URLSearchParams(`offset=${offset}&limit=${chunks}`);
@@ -113,7 +113,7 @@ function slice(upstream, context, from, to) {
 function follow(upstream, context, name, maxInFlight = 5) {
   const {
     fetch,
-    parseHtml
+    parseHtml,
   } = context;
   return map(upstream, context, async (entry) => {
     const value = entry[name];
@@ -121,7 +121,7 @@ function follow(upstream, context, name, maxInFlight = 5) {
       const resp = await fetch(value);
       return {
         ...entry,
-        [name]: resp.ok ? parseHtml(await resp.text()) : null
+        [name]: resp.ok ? parseHtml(await resp.text()) : null,
       };
     }
     return entry;
@@ -190,7 +190,7 @@ export function ffetch(url) {
   const context = {
     chunks,
     fetch,
-    parseHtml
+    parseHtml,
   };
   const generator = request(url, context);
 

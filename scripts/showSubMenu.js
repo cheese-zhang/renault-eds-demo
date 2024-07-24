@@ -2,7 +2,7 @@ export default class {
   constructor() {
     const defaults = {
       selector: document.querySelectorAll('.js-show-submenu'),
-      breakPt: 768
+      breakPt: 768,
     };
 
     this.settings = defaults;
@@ -12,14 +12,14 @@ export default class {
   init() {
     const {
       selector,
-      breakPt
+      breakPt,
     } = this.settings;
     if (!selector) return;
 
-    [...selector].forEach(elem => {
+    [...selector].forEach((elem) => {
       const mainBlock = [...document.getElementsByTagName('main')];
-      mainBlock.forEach(block => {
-        block.addEventListener('click', (e) => {
+      mainBlock.forEach((block) => {
+        block.addEventListener('click', () => {
           elem.classList.remove('open');
         });
       });
@@ -55,10 +55,10 @@ export default class {
     const { selector } = this.settings;
     if (!selector) return;
 
-    const burgerMenuButton = document.querySelector('.js-show-mobile-menu');
+    // const burgerMenuButton = document.querySelector('.js-show-mobile-menu');
     const overlay = document.getElementById('js-header-overlay');
 
-    [...selector].forEach(elem => {
+    [...selector].forEach((elem) => {
       elem.classList.remove('open');
     });
 

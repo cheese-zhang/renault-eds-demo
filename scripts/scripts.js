@@ -46,6 +46,7 @@ async function loadFonts() {
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
+// eslint-disable-next-line
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
