@@ -30,7 +30,8 @@ export const getLanguagePath = () => {
 
 export async function getPlaceholders() {
   const url = `${getLanguagePath()}placeholder.json`;
-  placeholders = await fetch(url).then((resp) => resp.json());
+  placeholders = await fetch(url)
+    .then((resp) => resp.json());
 }
 
 export function getTextLabel(key) {
@@ -40,13 +41,17 @@ export function getTextLabel(key) {
 /**
  * Create an element with the given id and classes.
  * @param {string} tagName the tag
- * @param {Object} options the element options
+ * @param {{textContent: string}} options the element options
  * @param {string[]|string} [options.classes=[]] the class or classes to add
  * @param {Object} [options.props={}] any other attributes to add to the element
  * @returns {HTMLElement} the element
  */
 export function createElement(tagName, options = {}) {
-  const { classes = [], props = {} } = options;
+  const {
+    classes = [],
+    props = {},
+    textContent
+  } = options;
   const elem = document.createElement(tagName);
   const isString = typeof classes === 'string';
   if (classes || (isString && classes !== '') || (!isString && classes.length > 0)) {
@@ -56,12 +61,15 @@ export function createElement(tagName, options = {}) {
   if (!isString && classes.length === 0) elem.removeAttribute('class');
 
   if (props) {
-    Object.keys(props).forEach((propName) => {
-      const value = propName === props[propName] ? '' : props[propName];
-      elem.setAttribute(propName, value);
-    });
+    Object.keys(props)
+      .forEach((propName) => {
+        const value = propName === props[propName] ? '' : props[propName];
+        elem.setAttribute(propName, value);
+      });
   }
-
+  if (textContent) {
+    elem.textContent = textContent;
+  }
   return elem;
 }
 
@@ -87,7 +95,13 @@ export function createNewSection(blockName, sectionName, node) {
  * @param {string} href The favicon URL
  */
 export function addFavIcon(href) {
-  const link = createElement('link', { props: { rel: 'icon', type: 'image/svg+xml', href } });
+  const link = createElement('link', {
+    props: {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      href
+    }
+  });
   const existingLink = document.querySelector('head link[rel="icon"]');
   if (existingLink) {
     existingLink.parentElement.replaceChild(link, existingLink);
@@ -163,22 +177,24 @@ export function loadDelayed() {
 }
 
 export const removeEmptyTags = (block) => {
-  block.querySelectorAll('*').forEach((x) => {
-    const tagName = `</${x.tagName}>`;
+  block.querySelectorAll('*')
+    .forEach((x) => {
+      const tagName = `</${x.tagName}>`;
 
-    // exclude iframes
-    if (x.tagName.toUpperCase() === 'IFRAME') {
-      return;
-    }
-    // checking that the tag is not autoclosed to make sure we don't remove <meta />
-    // checking the innerHTML and trim it to make sure the content inside the tag is 0
-    if (
-      x.outerHTML.slice(tagName.length * -1).toUpperCase() === tagName
-      // && x.childElementCount === 0
-      && x.innerHTML.trim().length === 0) {
-      x.remove();
-    }
-  });
+      // exclude iframes
+      if (x.tagName.toUpperCase() === 'IFRAME') {
+        return;
+      }
+      // checking that the tag is not autoclosed to make sure we don't remove <meta />
+      // checking the innerHTML and trim it to make sure the content inside the tag is 0
+      if (
+        x.outerHTML.slice(tagName.length * -1)
+          .toUpperCase() === tagName
+        // && x.childElementCount === 0
+        && x.innerHTML.trim().length === 0) {
+        x.remove();
+      }
+    });
 };
 
 export const unwrapDivs = (element, options = {}) => {
@@ -233,6 +249,7 @@ export function addClassIfChildHasClass(child, className) {
     child.parentElement.classList.add(className);
   }
 }
+
 /**
  *
  * @param {string} blockName - block name with '-' instead of spaces
@@ -278,7 +295,9 @@ export const adjustPretitle = (element) => {
 };
 
 export const slugify = (text) => (
-  text.toString().toLowerCase().trim()
+  text.toString()
+    .toLowerCase()
+    .trim()
     // separate accent from letter
     .normalize('NFD')
     // remove all separated accents
@@ -298,7 +317,9 @@ export const slugify = (text) => (
  * @param {String} groupName the one trust croup like: C0002
  */
 export function checkOneTrustGroup(groupName) {
-  const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  const oneTrustCookie = decodeURIComponent(document.cookie.split(';')
+    .find((cookie) => cookie.trim()
+      .startsWith('OptanonConsent=')));
   return oneTrustCookie.includes(`${groupName}:1`);
 }
 
@@ -317,13 +338,15 @@ export const generateId = (prefix = 'id') => {
  * Helper for delaying a function
  * @param {function} func callback function
  * @param {number} timeout time to debouce in ms, default 200
-*/
+ */
 export function debounce(func, timeout = 200) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
 
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
   };
 }
 
@@ -331,7 +354,7 @@ export function debounce(func, timeout = 200) {
  * Returns a list of properties listed in the block
  * @param {string} route get the Json data from the route
  * @returns {Object} the json data object
-*/
+ */
 export const getJsonFromUrl = async (route) => {
   try {
     const response = await fetch(route);
@@ -346,15 +369,16 @@ export const getJsonFromUrl = async (route) => {
 };
 
 export const deepMerge = (target, source) => {
-  Object.keys(source).forEach((key) => {
-    if (source[key] && typeof source[key] === 'object') {
-      if (!target[key]) {
-        target[key] = {};
+  Object.keys(source)
+    .forEach((key) => {
+      if (source[key] && typeof source[key] === 'object') {
+        if (!target[key]) {
+          target[key] = {};
+        }
+        deepMerge(target[key], source[key]);
+      } else {
+        target[key] = source[key];
       }
-      deepMerge(target[key], source[key]);
-    } else {
-      target[key] = source[key];
-    }
-  });
+    });
   return target;
 };

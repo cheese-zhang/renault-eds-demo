@@ -1,4 +1,13 @@
 /* stylelint-disable max-line-length */
+
+@font-face {
+    font-family: social-icons;
+    src: url("../fonts/social-icons.ttf") format("ttf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap
+}
+
 @font-face {
     font-family: "DIN Pro";
     src: url("../fonts/DINPro-Bold.woff2") format("woff2"), url("../fonts/DINPro-Bold.woff") format("woff");

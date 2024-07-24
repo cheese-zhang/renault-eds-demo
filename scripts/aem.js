@@ -776,10 +776,9 @@ async function waitForLCP(lcpBlocks) {
 }
 // get dynamic width style
 function transform(a, b) {
-  let children = parseInt(a.toFixed(2) * 100, 10); // 分子
-  let parent = parseInt(b.toFixed(2) * 100, 10); // 分母
-  let min = Math.min(children, parent); // 较小的
-  // eslint-disable-next-line no-plusplus
+  let children = parseInt(a.toFixed(2) * 100, 10);
+  let parent = parseInt(b.toFixed(2) * 100, 10);
+  let min = Math.min(children, parent);
   for (let i = min; i > 1; i--) {
     if (!(children % i) && !(parent % i)) {
       children /= i;

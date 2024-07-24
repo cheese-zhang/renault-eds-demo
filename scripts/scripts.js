@@ -12,6 +12,7 @@ import {
   loadBlocks,
   loadCSS,
 } from './aem.js';
+import { getLanguagePath } from './common.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
@@ -79,10 +80,16 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    main.id = 'content';
     decorateMain(main);
-    document.body.classList.add('appear');
-    document.body.classList.add('home-page');
-    document.body.classList.add('node--type-homepage');
+    //if homepage
+    if (window.location.href.split('/').pop() === ''){
+      document.body.classList.add('appear');
+      document.body.classList.add('home-page');
+      document.body.classList.add('node--type-homepage');
+    }else{
+      document.body.classList.add('path-node');
+    }
     await waitForLCP(LCP_BLOCKS);
   }
 
