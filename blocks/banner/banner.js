@@ -4,13 +4,10 @@ export default function decorate(block) {
   const bannerContainer = document.createElement('div');
   bannerContainer.className = 'c-banner';
   const picture = createOptimizedPicture(block.querySelector('img').src, 'banner', true, [{ width: '1920' }]);
-  picture.querySelector('img')
-    .classList
-    .add('c-banner__img');
+  picture.querySelector('img').classList.add('c-banner__img');
   bannerContainer.append(picture);
 
   // overlay
-
   const overlay = document.createElement('div');
   overlay.className = 'c-banner__overlay';
   bannerContainer.append(overlay);

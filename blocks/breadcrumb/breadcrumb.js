@@ -1,5 +1,5 @@
-import { addFavIcon, createElement, getLanguagePath } from '../../scripts/common.js';
-import { decorateIcons, getOrigin } from '../../scripts/aem.js';
+import { createElement, getLanguagePath } from '../../scripts/common.js';
+import { getOrigin } from '../../scripts/aem.js';
 
 const svgHome = `<svg width="18px" version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"
      style="enable-background:new 0 0 24 24;" xml:space="preserve">
@@ -11,7 +11,6 @@ const svgSeparator = `<svg width="6" height="16" viewBox="0 0 6 16" fill="none" 
 </svg>
 `;
 export default function decorate(block) {
-
   const breadContainer = createElement('div', { classes: 'c-structured-content__prehead' });
   breadContainer.appendChild(createElement('div', { classes: 'c-breadcrumb' }));
 
@@ -33,29 +32,29 @@ export default function decorate(block) {
     const item = createElement('li', { classes: 'c-breadcrumb__item' });
     if (index !== breadcrumbList.length - 1) {
       const itemLink = createElement('a', { props: { href: `${getLanguagePath()}${breadcrumb}` } });
-      itemLink.append(createElement('span',{textContent:`${breadcrumb}`}));
+      itemLink.append(createElement('span', { textContent: `${breadcrumb}` }));
       item.append(itemLink);
-      const spanSeparator = createElement('span',{ classes: 'c-breadcrumb__separator' });
+      const spanSeparator = createElement('span', { classes: 'c-breadcrumb__separator' });
       spanSeparator.innerHTML = svgSeparator;
       item.append(spanSeparator);
-    }else{
+    } else {
       item.textContent = breadcrumb;
     }
     breadcrumbItems.append(item);
   });
-  breadContainer.querySelector('.c-breadcrumb').append(breadcrumbItems)
+  breadContainer.querySelector('.c-breadcrumb').append(breadcrumbItems);
 
   // add share list
   const iconsList = block.querySelectorAll('a');
   const shareListContainer = createElement('div', { classes: 'c-structured-content__share' });
-  shareListContainer.append(createElement('span', { classes: 'c-structured-content__text' ,textContent:'Share ' }));
-  iconsList.forEach((icon, index) => {
-    const itemLink = createElement('a', { classes: ['c-structured-content__link' ,'js-share-button'] });
+  shareListContainer.append(createElement('span', { classes: 'c-structured-content__text', textContent: 'Share ' }));
+  iconsList.forEach((icon) => {
+    const itemLink = createElement('a', { classes: ['c-structured-content__link', 'js-share-button'] });
     itemLink.href = icon.href + window.location.href;
     const itemIcon = createElement('i', { classes: `icon-std-${icon.querySelector('img').getAttribute('data-icon-name')}` });
     itemLink.append(itemIcon);
     shareListContainer.append(itemLink);
-  })
+  });
   breadContainer.append(shareListContainer);
   block.textContent = '';
   block.append(breadContainer);

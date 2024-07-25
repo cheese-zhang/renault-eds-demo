@@ -50,7 +50,7 @@ export function createElement(tagName, options = {}) {
   const {
     classes = [],
     props = {},
-    textContent
+    textContent,
   } = options;
   const elem = document.createElement(tagName);
   const isString = typeof classes === 'string';
@@ -99,8 +99,8 @@ export function addFavIcon(href) {
     props: {
       rel: 'icon',
       type: 'image/svg+xml',
-      href
-    }
+      href,
+    },
   });
   const existingLink = document.querySelector('head link[rel="icon"]');
   if (existingLink) {

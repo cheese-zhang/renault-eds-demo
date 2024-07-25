@@ -779,6 +779,7 @@ function transform(a, b) {
   let children = parseInt(a.toFixed(2) * 100, 10);
   let parent = parseInt(b.toFixed(2) * 100, 10);
   let min = Math.min(children, parent);
+  // eslint-disable-next-line no-plusplus
   for (let i = min; i > 1; i--) {
     if (!(children % i) && !(parent % i)) {
       children /= i;
