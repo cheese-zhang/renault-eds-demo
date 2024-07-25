@@ -2222,7 +2222,7 @@ div.block div.pager .pagination .scroll li a {
     font-weight: 400
 }
 
-.u-background--dark .h1-like, .u-background--dark .h2-like, .u-background--dark .h3-like, .u-background--darker .h1-like, .u-background--darker .h2-like, .u-background--darker .h3-like, .u-background--darker h1, .u-background--darker h2, .u-background--darker h3, .u-background--dark h1, .u-background--dark h2, .u-background--dark h3 {
+.u-background--dark .h1-like, .u-background--dark .h2-like, .u-background--dark .h3-like, .u-background--darker .h1-like, .u-background--darker .h2-like, .u-background--darker .h3-like, .u-background--darker h1, .u-background--darker h2, .u-background--darker h3, .u-background--dark h1, .u-background--dark h2,.u-background-dark h2, .u-background--dark h3 {
     color: #fff
 }
 
@@ -2396,4 +2396,11 @@ dl dd, ul.c-breadcrumb {
         flex-direction: column;
         align-items: stretch
     }
+}
+.u-padding-vertical-xl {
+    padding-top: 8rem!important;
+    padding-bottom: 8rem!important
+}
+.u-background-dark {
+    background-color: #494949
 }

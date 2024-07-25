@@ -11,8 +11,9 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
-  getMetadata,
+  getMetadata, readBlockConfig,
 } from './aem.js';
+import { createElement } from './common.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
@@ -47,11 +48,62 @@ async function loadFonts() {
 // eslint-disable-next-line no-unused-vars
 function buildPressReleases(main) {
   const template = getMetadata('template');
+
+  // replace all the content
+  function buildPressContent(contentSection) {
+    console.log(contentSection.getAttribute('data-phone'),contentSection.getAttribute('data-e-mail'));
+    const contentContainerGlob = createElement('div', { classes: 'u-global-margin' });
+    const contentContainer = createElement('div', { classes: ['c-structured-content', 'o-grid'] });
+    contentContainerGlob.append(contentContainer);
+
+    // build content header
+    const header = createElement('div', { classes: 'c-structured-content__head' });
+    const date = createElement('p', {
+      classes: 'c-structured-content__date',
+      textContent: getMetadata('publishdata'),
+    });
+    header.append(date);
+
+    const title = createElement('h1', { classes: 'c-structured-content__title' });
+    title.append(contentSection.querySelector('h1'));
+    header.append(title);
+
+    const tags = createElement('p', { classes: 'c-structured-content__tags' });
+    const tagList = getMetadata('article:tag').split(',');
+    [...tagList].forEach((tag) => {
+      const tagLink = createElement('a', { classes: 'c-structured-content__tags__link',props:{href:'#'},textContent:tag });
+      tags.append(tagLink);
+    })
+    header.append(tags);
+
+    contentContainer.append(header);
+
+    // render content
+    const content  = createElement('div', { classes: 'c-structured-content__content' });
+    const contentData = contentSection.cloneNode(true);
+    // contentData.removeChild(contentData.querySelector('h1'));
+    content.append(contentData.querySelector('.default-content-wrapper'));
+
+    contentContainer.append(content);
+
+    // const titleH1 = ;
+    contentSection.replaceChildren(contentContainerGlob);
+  }
+
   // auto build press releases
   if (template) {
     switch (template) {
       case 'Press releases': {
-        // TODO implement the articles special setup
+        let contentSection;
+        main.querySelectorAll('.section')
+          .forEach(pre => {
+            if (pre.classList.length === 1) {
+              contentSection = pre;
+            }
+          });
+        if (contentSection) {
+          buildPressContent(contentSection);
+        }
         break;
       }
       default:
@@ -95,7 +147,6 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
-  buildArticles(main);
 }
 
 /**
@@ -118,6 +169,8 @@ async function loadEager(doc) {
     } else {
       document.body.classList.add('path-node');
     }
+    // render articles
+    buildArticles(main);
     await waitForLCP(LCP_BLOCKS);
   }
 
