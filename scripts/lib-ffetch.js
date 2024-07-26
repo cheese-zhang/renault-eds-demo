@@ -478,10 +478,10 @@ export async function createList(pressReleases, filter, createFilters, buildPres
     if (withTitle) {
       const title = attachTitle(cfg.title ? cfg.title : '');
       if (el.classList.contains('u-background-dark')) {
-        title.className = 'h2-like--chevron-bottom--white'
+        title.className = 'h2-like--chevron-bottom--white';
       }
       children.push(title);
-    };
+    }
     if (filter) children.push(attachSubmitListners(filter));
     if (pagination) children.push(attachClickListners(pagination));
     children.push(list);

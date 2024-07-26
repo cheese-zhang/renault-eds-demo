@@ -11,7 +11,7 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
-  getMetadata, readBlockConfig,
+  getMetadata,
 } from './aem.js';
 import { createElement } from './common.js';
 
@@ -92,7 +92,6 @@ function buildPressReleases(main) {
 
   // replace all the content
   function buildPressContent(contentSection) {
-    console.log(contentSection.getAttribute('data-phone'), contentSection.getAttribute('data-e-mail'));
     const contentContainerGlob = createElement('div', { classes: 'u-global-margin' });
     const contentContainer = createElement('div', { classes: ['c-structured-content', 'o-grid'] });
     contentContainerGlob.append(contentContainer);
@@ -142,7 +141,7 @@ function buildPressReleases(main) {
       case 'Press releases': {
         let contentSection;
         main.querySelectorAll('.section')
-          .forEach(pre => {
+          .forEach((pre) => {
             if (pre.classList.length === 1) {
               contentSection = pre;
             }
