@@ -789,6 +789,7 @@ dl dt::after {
     margin: 0 .5rem;
     content: ":"
 }
+
 audio, canvas, iframe, img, svg, video {
     max-width: 100%;
     vertical-align: middle
@@ -921,37 +922,6 @@ progress::-webkit-progress-value {
 }
 
 
-
-.c-btn--dark {
-    background: #232323;
-    color: #fff
-}
-
-.c-btn--dark:active, .c-btn--dark:focus, .c-btn--dark:hover {
-    color: #fff
-}
-
-.c-btn--secondary {
-    border: .1rem solid #fff;
-    color: #fff
-}
-
-.c-btn--secondary:active, .c-btn--secondary:focus, .c-btn--secondary:hover {
-    background: #fff;
-    color: #000
-}
-
-.c-btn--red {
-    border: #e3021b;
-    background-color: #e3021b;
-    color: #fff
-}
-
-.c-btn--red:active, .c-btn--red:focus, .c-btn--red:hover {
-    background: #000;
-    color: #fff
-}
-
 .c-banner__btn, .c-btn, .c-footer__copyright a[href*="/contact"] {
     position: relative;
     display: inline-block;
@@ -976,6 +946,7 @@ progress::-webkit-progress-value {
     padding: 1.4rem 5rem;
     border: 0
 }
+
 /* c_btn */
 .c-btn--icon-arrow {
     padding: 20px 56px 20px 24px
@@ -999,6 +970,7 @@ progress::-webkit-progress-value {
     /* background-image: url(/themes/custom/corporate/styles/src/assets/images/Union.svg); */
     transition: all .3s ease-in-out
 }
+
 .c-btn--no-style {
     padding: 0;
     border: none;
@@ -2222,7 +2194,7 @@ div.block div.pager .pagination .scroll li a {
     font-weight: 400
 }
 
-.u-background--dark .h1-like, .u-background--dark .h2-like, .u-background--dark .h3-like, .u-background--darker .h1-like, .u-background--darker .h2-like, .u-background--darker .h3-like, .u-background--darker h1, .u-background--darker h2, .u-background--darker h3, .u-background--dark h1, .u-background--dark h2,.u-background-dark h2, .u-background--dark h3 {
+.u-background--dark .h1-like, .u-background--dark .h2-like, .u-background--dark .h3-like, .u-background--darker .h1-like, .u-background--darker .h2-like, .u-background--darker .h3-like, .u-background--darker h1, .u-background--darker h2, .u-background--darker h3, .u-background--dark h1, .u-background--dark h2, .u-background-dark h2, .u-background--dark h3 {
     color: #fff
 }
 
@@ -2232,7 +2204,7 @@ div.block div.pager .pagination .scroll li a {
     }
 }
 
-.icon-arrow-cta , .icon-arrow-cta-wt {
+.icon-arrow-cta, .icon-arrow-cta-wt {
     margin-left: 1.688rem;
 }
 
@@ -2240,18 +2212,22 @@ div.block div.pager .pagination .scroll li a {
     padding: 4rem 0;
     background: rgb(217 218 219 / 35%)
 }
+
 .u-padding-vertical--lg {
-    padding-top: 6rem!important;
-    padding-bottom: 6rem!important
+    padding-top: 6rem !important;
+    padding-bottom: 6rem !important
 }
+
 .u-padding-vertical--xl {
-    padding-top: 8rem!important;
-    padding-bottom: 8rem!important
+    padding-top: 8rem !important;
+    padding-bottom: 8rem !important
 }
-.u-background--dark,.u-background--darker {
+
+.u-background--dark, .u-background--darker {
     background-color: #494949
 }
-.c-link--white::after{
+
+.c-link--white::after {
     background-image: url("../icons/arrow-cta-wt.svg");
     position: absolute;
     background-size: contain;
@@ -2261,9 +2237,11 @@ div.block div.pager .pagination .scroll li a {
     height: 2.1rem;
     bottom: 3em;
 }
-.h2-like-section,h2 {
+
+.h2-like-section, h2 {
     margin-left: 2rem
 }
+
 .c-structured-content__prehead {
     display: flex;
     justify-content: space-between;
@@ -2272,18 +2250,20 @@ div.block div.pager .pagination .scroll li a {
 
 @media (max-width: 47.99em) {
     .c-structured-content__prehead {
-        margin-top:1rem;
+        margin-top: 1rem;
         justify-content: flex-start
     }
 }
+
 dl dd, ul.c-breadcrumb {
     margin: 0
 }
+
 .c-structured-content__share {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    font-family: DIN Pro,Arial,sans-serif
+    font-family: DIN Pro, Arial, sans-serif
 }
 
 .c-structured-content__share i {
@@ -2309,8 +2289,9 @@ dl dd, ul.c-breadcrumb {
     transform: translateY(-50%);
     height: 50%;
     width: 1px;
-    background-color: rgba(0,0,0,.1)
+    background-color: rgba(0, 0, 0, .1)
 }
+
 .c-structured-content__tags {
     padding: 25px 0 10px
 }
@@ -2366,7 +2347,7 @@ dl dd, ul.c-breadcrumb {
 
 .c-structured-content__author {
     display: block;
-    font-family: DIN Pro,Arial,sans-serif;
+    font-family: DIN Pro, Arial, sans-serif;
     font-size: 1.6rem;
     font-weight: 700
 }
@@ -2379,7 +2360,7 @@ dl dd, ul.c-breadcrumb {
 
 .c-structured-content__contact span {
     word-break: break-all;
-    white-space: normal!important
+    white-space: normal !important
 }
 
 .c-structured-content__first:first-letter {
@@ -2389,7 +2370,7 @@ dl dd, ul.c-breadcrumb {
 
 @media (min-width: 48em) {
     .c-structured-content__sticky {
-        position:-webkit-sticky;
+        position: -webkit-sticky;
         position: sticky;
         top: 30%;
         display: flex;
@@ -2397,10 +2378,68 @@ dl dd, ul.c-breadcrumb {
         align-items: stretch
     }
 }
+
 .u-padding-vertical-xl {
-    padding-top: 8rem!important;
-    padding-bottom: 8rem!important
+    padding-top: 8rem !important;
+    padding-bottom: 8rem !important
 }
+
 .u-background-dark {
     background-color: #494949
+}
+
+.content-download-svg::after {
+    background-image: url("../icons/arrow-download.svg");
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    content: "";
+    width: 2.8rem;
+    height: 2.1rem;
+    right: 2em;
+}
+
+.c-structured-content__buttons a:first-child[href*="/contact"], .c-structured-content__buttons .c-banner__btn:first-child, .c-structured-content__buttons .c-btn:first-child, .c-structured-content__buttons .c-footer__copyright a:first-child[href*="/contact"] {
+    margin-bottom: 2rem;
+    text-align: left
+}
+
+.c-structured-content__buttons .c-download {
+    display: flex;
+    justify-content: space-between
+}
+
+.c-structured-content__buttons a[href*="/contact"], .c-structured-content__buttons .c-banner__btn, .c-structured-content__buttons .c-btn, .c-structured-content__buttons .c-footer__copyright a[href*="/contact"] {
+    width: 100%;
+    padding: 1.3rem 1rem;
+    font-size: 1.3rem
+}
+
+.c-structured-content__sticky a[href*="/contact"], .c-structured-content__sticky .c-banner__btn, .c-structured-content__sticky .c-btn, .c-structured-content__sticky .c-footer__copyright a[href*="/contact"] {
+    text-align: left;
+    padding-left: 1.75rem !important;
+    padding-right: 1.75rem !important
+}
+
+.c-btn--dark {
+    background: #232323;
+    color: #fff
+}
+
+.c-btn--dark:active, .c-btn--dark:focus, .c-btn--dark:hover {
+    color: #fff
+}
+
+.c-btn--red {
+    border: #e3021b;
+    background-color: #e3021b;
+    color: #fff
+}
+
+.c-btn--red:active, .c-btn--red:focus, .c-btn--red:hover {
+    background: #000;
+    color: #fff
+}
+.c-structured-content__buttons {
+    margin-bottom: 2rem
 }

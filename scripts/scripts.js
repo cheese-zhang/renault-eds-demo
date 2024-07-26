@@ -49,9 +49,50 @@ async function loadFonts() {
 function buildPressReleases(main) {
   const template = getMetadata('template');
 
+  function buildContactSection(contentSection) {
+    const contact = createElement('div', { classes: 'u-1/3' });
+    const contactSticky = createElement('div', { classes: 'c-structured-content__sticky' });
+    const buttons = createElement('div', { classes: 'c-structured-content__buttons' });
+    const downloadLink = createElement('a', {
+      classes: ['content-download-svg', 'c-btn', 'c-btn--dark', 'c-download'],
+      props: { href: '#' },
+      textContent: 'Download press kit',
+    });
+    downloadLink.append(createElement('br'));
+    downloadLink.innerHTML = `${downloadLink.innerHTML}  FR - EN - ES - DE - IT`;
+    buttons.append(downloadLink);
+    buttons.append(createElement('a', {
+      classes: 'c-btn',
+      props: {
+        href: '#',
+        ref: 'nofollow',
+      },
+      textContent: 'Subscribe to our press releases',
+    }));
+    contactSticky.append(buttons);
+
+    const wrapper = createElement('div', { classes: 'c-structured-content__wrapper' });
+    wrapper.append(createElement('p', {
+      classes: ['h2-like', 'h2-like--small'],
+      textContent: 'Press contact',
+    }));
+    const supportCfg = createElement('p', { classes: 'c-structured-content__contact' });
+    supportCfg.append(createElement('span', {
+      classes: 'c-structured-content__author',
+      textContent: 'Severyne Molard',
+    }));
+    supportCfg.append(createElement('span'));
+    supportCfg.innerHTML = `Phone : ${contentSection.getAttribute('data-phone')} <br> E-mail : ${contentSection.getAttribute('data-e-mail')}`;
+
+    wrapper.append(supportCfg);
+    contactSticky.append(wrapper);
+    contact.append(contactSticky);
+    return contact;
+  }
+
   // replace all the content
   function buildPressContent(contentSection) {
-    console.log(contentSection.getAttribute('data-phone'),contentSection.getAttribute('data-e-mail'));
+    console.log(contentSection.getAttribute('data-phone'), contentSection.getAttribute('data-e-mail'));
     const contentContainerGlob = createElement('div', { classes: 'u-global-margin' });
     const contentContainer = createElement('div', { classes: ['c-structured-content', 'o-grid'] });
     contentContainerGlob.append(contentContainer);
@@ -69,24 +110,29 @@ function buildPressReleases(main) {
     header.append(title);
 
     const tags = createElement('p', { classes: 'c-structured-content__tags' });
-    const tagList = getMetadata('article:tag').split(',');
+    const tagList = getMetadata('article:tag')
+      .split(',');
     [...tagList].forEach((tag) => {
-      const tagLink = createElement('a', { classes: 'c-structured-content__tags__link',props:{href:'#'},textContent:tag });
+      const tagLink = createElement('a', {
+        classes: 'c-structured-content__tags__link',
+        props: { href: '#' },
+        textContent: tag,
+      });
       tags.append(tagLink);
-    })
+    });
     header.append(tags);
 
     contentContainer.append(header);
 
     // render content
-    const content  = createElement('div', { classes: 'c-structured-content__content' });
+    const content = createElement('div', { classes: ['c-structured-content__content', 'u-4/6'] });
     const contentData = contentSection.cloneNode(true);
     // contentData.removeChild(contentData.querySelector('h1'));
     content.append(contentData.querySelector('.default-content-wrapper'));
-
+    // render contact block
+    const contact = buildContactSection(contentSection);
     contentContainer.append(content);
-
-    // const titleH1 = ;
+    contentContainer.append(contact);
     contentSection.replaceChildren(contentContainerGlob);
   }
 
