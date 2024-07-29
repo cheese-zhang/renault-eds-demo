@@ -1,10 +1,14 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, fetchPlaceholders } from '../../scripts/aem.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
+  const placeholders = await fetchPlaceholders();
+  const { homepageTitle } = placeholders;
   const bannerContainer = document.createElement('div');
   bannerContainer.className = 'c-banner';
   const picture = createOptimizedPicture(block.querySelector('img').src, 'banner', true, [{ width: '1920' }]);
-  picture.querySelector('img').classList.add('c-banner__img');
+  picture.querySelector('img')
+    .classList
+    .add('c-banner__img');
   bannerContainer.append(picture);
 
   // overlay
@@ -18,7 +22,7 @@ export default function decorate(block) {
   if (block.querySelector('h1') || block.querySelector('p')) {
     const title = document.createElement('h1');
     title.className = 'c-banner__title';
-    title.textContent = (block.querySelector('h1') ? block.querySelector('h1') : block.querySelector('p')).textContent;
+    title.textContent = homepageTitle;
     bannerContent.append(title);
   }
   // button

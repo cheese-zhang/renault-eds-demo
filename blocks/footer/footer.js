@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { getLanguagePath } from '../../scripts/common.js';
 
 function buildFooter(footerContent, section, footerUlElement) {
   switch (footerContent.getAttribute('data-position')) {
@@ -68,7 +69,7 @@ function buildFooter(footerContent, section, footerUlElement) {
 export default async function decorate(block) {
   // load footer as fragment
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : `${getLanguagePath()}footer`;
   const fragment = await loadFragment(footerPath);
   // render the country choose block
   block.textContent = '';

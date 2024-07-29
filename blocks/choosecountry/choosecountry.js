@@ -1,7 +1,11 @@
+import { fetchPlaceholders } from '../../scripts/aem.js';
+
 export default async function decorate(block) {
+  const placeholders = await fetchPlaceholders();
+  const { chooseYourCountry } = placeholders;
   let countries = [];
   countries = await new Promise((resolve) => {
-    fetch('/country.json')
+    fetch('country.json')
       .then((resp) => {
         if (resp.ok) {
           return resp.json();
@@ -22,7 +26,7 @@ export default async function decorate(block) {
   countryWrapper.className = 'c-country-banner__wrapper';
   const countriesTitle = document.createElement('div');
   countriesTitle.className = 'c-country-banner__title';
-  countriesTitle.textContent = 'Choose your country';
+  countriesTitle.textContent = chooseYourCountry;
   countryWrapper.append(countriesTitle);
   countryContainer.append(countryWrapper);
 

@@ -1,6 +1,9 @@
-import { readBlockConfig } from '../../scripts/aem.js';
+import { readBlockConfig, fetchPlaceholders } from '../../scripts/aem.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
+  const placeholders = await fetchPlaceholders();
+  const { keyFigures } = placeholders;
+
   const cfg = readBlockConfig(block, true);
   const keyfiguresContainer = document.createElement('div');
   keyfiguresContainer.className = 'c-structured-keyfigures';
@@ -8,7 +11,7 @@ export default function decorate(block) {
 
   const titleH2 = document.createElement('h2');
   titleH2.classList.add('h2-like--chevron-bottom');
-  titleH2.textContent = '  Key figures ';
+  titleH2.textContent = keyFigures;
   keyfiguresContainer.appendChild(titleH2);
   const keyContent = document.createElement('div');
   keyContent.className = 'c-keyfigure u-global-margin';

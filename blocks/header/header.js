@@ -2,6 +2,7 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import ShowSubMenu from '../../scripts/showSubMenu.js';
 import HeaderScroll from '../../scripts/headerScroll.js';
+import { getLanguagePath } from '../../scripts/common.js';
 
 function buildTopSection(fragment, block) {
   // decorate headerTop
@@ -26,7 +27,7 @@ function buildTopSection(fragment, block) {
         languagesList.forEach((l) => {
           const languageItem = document.createElement('a');
           languageItem.classList.add('c-header-top__link');
-          languageItem.href = l.href;
+          languageItem.href = l.querySelector('a').href;
           languageItem.textContent = l.textContent;
           headerTopContentItem.appendChild(languageItem);
         });
@@ -77,6 +78,13 @@ function buildNavSection(fragment, block) {
       menuItem.className = 'c-header-subnav__item js-show-submenu';
       const menuLink = l.querySelector('li > a');
       menuLink.className = 'c-btn c-btn--no-style c-header-subnav__link';
+      // fix link href
+      if (menuLink.href !== '#') {
+        menuLink.href = window.location.origin + getLanguagePath() + menuLink.href.replace('http://', '')
+          .replace('/', '')
+          .replace('https://', '')
+          .replace('home', '');
+      }
       menuItem.appendChild(menuLink);
       if (l.querySelector('li > ul') !== null) {
         // add subpages
@@ -103,7 +111,7 @@ export default async function decorate(block) {
   block.parentElement.className = 'c-header';
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : `${getLanguagePath()}nav`;
   const fragment = await loadFragment(navPath);
   // decorate nav DOM
   block.textContent = '';

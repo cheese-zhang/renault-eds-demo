@@ -557,18 +557,22 @@ function decorateSections(main) {
       }
     });
 }
-
+export const getLanguagePath = () => {
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  return langCodeMatch ? langCodeMatch[1] : '/';
+};
 /**
  * Gets placeholders object.
  * @param {string} [prefix] Location of placeholders
  * @returns {object} Window placeholders object
  */
 // eslint-disable-next-line import/prefer-default-export
-async function fetchPlaceholders(prefix = 'default') {
+async function fetchPlaceholders(prefix = getLanguagePath()) {
   window.placeholders = window.placeholders || {};
   if (!window.placeholders[prefix]) {
     window.placeholders[prefix] = new Promise((resolve) => {
-      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
+      fetch(`${prefix === 'default' ? '' : prefix}placeholders.json`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
@@ -774,6 +778,7 @@ async function waitForLCP(lcpBlocks) {
     }
   });
 }
+
 // get dynamic width style
 function transform(a, b) {
   let children = parseInt(a.toFixed(2) * 100, 10);
@@ -789,6 +794,7 @@ function transform(a, b) {
   }
   return `${children}/${parent}`;
 }
+
 init();
 
 export {
