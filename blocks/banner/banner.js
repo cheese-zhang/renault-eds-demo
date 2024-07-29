@@ -1,8 +1,6 @@
-import { createOptimizedPicture, fetchPlaceholders } from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  const placeholders = await fetchPlaceholders();
-  const { homepageTitle } = placeholders;
   const bannerContainer = document.createElement('div');
   bannerContainer.className = 'c-banner';
   const picture = createOptimizedPicture(block.querySelector('img').src, 'banner', true, [{ width: '1920' }]);
@@ -22,7 +20,7 @@ export default async function decorate(block) {
   if (block.querySelector('h1') || block.querySelector('p')) {
     const title = document.createElement('h1');
     title.className = 'c-banner__title';
-    title.textContent = homepageTitle;
+    title.textContent = (block.querySelector('h1') ? block.querySelector('h1') : block.querySelector('p')).textContent;
     bannerContent.append(title);
   }
   // button
