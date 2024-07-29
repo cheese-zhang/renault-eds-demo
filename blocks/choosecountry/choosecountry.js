@@ -1,11 +1,12 @@
-import { fetchPlaceholders } from '../../scripts/aem.js';
+import { fetchPlaceholders, getLanguagePath } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
   const placeholders = await fetchPlaceholders();
   const { chooseYourCountry } = placeholders;
   let countries = [];
+  const languages = await getLanguagePath();
   countries = await new Promise((resolve) => {
-    fetch('country.json')
+    fetch(`${languages}country.json`)
       .then((resp) => {
         if (resp.ok) {
           return resp.json();
