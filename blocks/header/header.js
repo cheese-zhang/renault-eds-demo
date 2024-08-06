@@ -21,8 +21,7 @@ function buildTopSection(fragment, block) {
     const headerTopContentItem = document.createElement('div');
 
     switch (c) {
-      case 'language':
-        // eslint-disable-next-line no-case-declarations
+      case 'language': {
         const languagesList = headerTopSection.querySelectorAll('div > ul > li > ul > li');
         languagesList.forEach((l) => {
           const languageItem = document.createElement('a');
@@ -32,23 +31,23 @@ function buildTopSection(fragment, block) {
           headerTopContentItem.appendChild(languageItem);
         });
         break;
-      case 'search':
+      }
+      case 'search': {
         headerTopContentItem.appendChild(headerTopSection.querySelectorAll('div > ul > li')[i].firstElementChild);
         break;
-      default:
-        // eslint-disable-next-line no-case-declarations
+      }
+      default: {
         const contactItem = document.createElement('a');
         contactItem.className = 'c-header-top__link';
-        // eslint-disable-next-line no-case-declarations
         const contactContent = headerTopSection.querySelectorAll('div > ul > li')[i].firstElementChild;
         contactItem.href = contactContent.href;
-        // eslint-disable-next-line no-case-declarations
         const headerTopContentItemSpan = document.createElement('span');
         headerTopContentItemSpan.className = 'c-header-top__txt';
         headerTopContentItemSpan.textContent = contactContent.textContent;
         contactItem.appendChild(headerTopContentItemSpan);
         headerTopContentItem.appendChild(contactItem);
         break;
+      }
     }
     headerTopContentItem.classList.add(`c-header-top__${c}`);
     headerTopContent.appendChild(headerTopContentItem);
